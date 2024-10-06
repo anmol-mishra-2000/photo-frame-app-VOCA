@@ -18,9 +18,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-around;
+            justify-content: flex-start;
             height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
+            scroll-behavior: smooth;
         }
 
         .container {
@@ -31,16 +32,8 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            margin: 20px 0;
             border: 1px solid #ddd;
-        }
-
-        .blue-area-text {
-            color: yellow;
-            font-size: 2rem;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 20px;
         }
 
         .buttons {
@@ -76,7 +69,7 @@
             border-radius: 10px;
             margin: 0 auto;
             display: block;
-            width: 100%; /* Ensure canvas scales with the container */
+            width: 100%;
             height: auto;
         }
 
@@ -102,7 +95,7 @@
         }
 
         input[type="range"] {
-            width: 100%; /* Full width on mobile screens */
+            width: 100%;
             max-width: 400px;
             margin: 12px;
             -webkit-appearance: none;
@@ -136,18 +129,18 @@
             margin-top: 30px;
             text-align: center;
             font-size: 1.2rem;
-            color: yellow; /* Changed to yellow */
-            background-color: transparent; /* Removed background */
+            color: yellow;
+            background-color: transparent;
             padding: 15px;
             border-top: none;
         }
 
         footer span {
-            color: yellow; /* Changed to yellow */
+            color: yellow;
             font-weight: bold;
         }
 
-        /* Media Queries for Mobile Responsiveness */
+        /* Mobile adjustments */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -165,11 +158,11 @@
             }
 
             input[type="range"] {
-                width: 100%; /* Ensure sliders are full width on mobile */
+                width: 100%;
             }
 
             canvas {
-                width: 100%; /* Ensure canvas scales with the container on mobile */
+                width: 100%;
             }
 
             footer {
@@ -201,11 +194,6 @@
 </head>
 <body>
 
-    <!-- Placeholder for logo or quote in the blue area -->
-    <div class="blue-area-text">
-        <p>Your Vote, Your Voice!</p> <!-- Example quote, can be replaced with a logo -->
-    </div>
-
     <div class="container">
         <!-- Canvas for the frame and photo -->
         <canvas id="photoCanvas"></canvas>
@@ -219,7 +207,7 @@
         <!-- Zoom and Move Sliders -->
         <div>
             <label for="zoomSlider">Zoom</label>
-            <input type="range" id="zoomSlider" min="0.5" max="2.0" step="0.1" value="1">
+            <input type="range" id="zoomSlider" min="0.5" max="1.5" step="0.05" value="1">
         </div>
 
         <div>
@@ -235,7 +223,6 @@
         <button id="downloadBtn" disabled>Download Photo</button>
     </div>
 
-    <!-- Footer with tagline -->
     <footer>
         <p><span>Transparency. Growth. Innovation.</span></p>
     </footer>
@@ -274,7 +261,7 @@
         // Function to fit the image properly in the canvas and resize dynamically
         function fitImageToCanvas() {
             const containerWidth = document.querySelector('.container').clientWidth;
-            canvas.width = containerWidth * 0.9; // Adjust for smaller screens
+            canvas.width = containerWidth * 1.5; // Higher resolution canvas for better output
             canvas.height = canvas.width; // Keep it square
 
             if (guestImage) {
@@ -359,6 +346,8 @@
                     video.style.display = 'none';
                     captureBtn.textContent = 'Capture Photo with Camera';
                 };
+            } else {
+                alert("Camera access is not available");
             }
         });
 
